@@ -1,0 +1,165 @@
+﻿@model GSTONBORDINGLibrary.SuperAdmin.SupperAdmin
+
+@{
+    ViewBag.Title = "GetCompanyList";
+    Layout = "~/Views/Shared/SuperAdminlayout.cshtml";
+}
+
+
+
+<h2>GetCompanyList</h2>
+
+
+<p>
+
+    <a href="/SuperAdmin/Company"><input type="button" class="btn btn-outline-primary" value="ADD New Company"></a>
+    @* @Html.ActionLink("Create New", "Create")*@
+    </p>
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+<table class="table table-bordered table-hover table-striped" id="mytable">
+    <thead>
+        <tr>
+
+            <th>
+                <center><lable>Company Code </lable></center>
+                @*@Html.DisplayNameFor(model => model.CompanyCode)*@
+            </th>
+            <th>
+                <center><lable>Company Name </lable></center>
+                
+            </th>
+            <th>
+               <center> <label>Owner Name</label></center>
+            </th>
+            <th>
+              
+                <center><lable>Email </lable></center>
+            </th>
+            <th>
+                
+                <center><lable>OwnerMobile Number </lable></center>
+            </th>
+
+            <th>
+               
+                <center><lable>Business Registration Number </lable></center>
+            </th>
+
+            <th>
+                <center><lable>Action </lable></center>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.CompanyRegistration)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerNmae)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerMobileNumber)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusinessRegistrationnumber)
+                </td>
+
+
+
+
+                <td>
+
+                    @Html.ActionLink("Edit", "CompanyEdit", new { id = item.CompanyCode }) |
+                    @Html.ActionLink("Details", "CompanyDetails", new { id = item.CompanyCode })
+                    @Html.ActionLink("Delete", "CompanyDelete", new { id = item.CompanyCode })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+</div>
+</div>
+</div>
+
+<script src="~/ux/NiceAdmin/NiceAdmin/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="~/ux/NiceAdmin/NiceAdmin/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script>
+ $(document).ready(function ()
+    {
+        $("#mytable").dataTable();
+
+ });
+ @*</script>
+
+<script>*@
+    $(document).ready(function () {
+
+        $("#mytable TBODY TR").each(function (i, text) {
+            var row = $(this);
+
+            var KRAId = row.find("#st").text();
+            var Add = row.find("#Add");
+            var View = row.find("#View");
+            if (KRAId == " Completed") {
+
+                $(Add).attr('disabled', 'disabled');
+                $(View).attr('disabled', 'disabled');
+                $(Add).css('cursor', 'not-allowed');
+                $(View).css('cursor', 'not-allowed');
+
+            } else {
+                $(Add).removeAttr('disabled');
+                $(View).removeAttr('disabled');
+            }
+        });
+        $("#Add").click(function () {
+            $("#Add").html('value', 'Save');
+            location.replace("/GetCompanyList/InsertCompanyRegistration");
+
+
+
+        });
+        $("#View").click(function () {
+
+            location.replace("/Employee/UpdateEmployeeKra");
+
+        });
+        var emp = $("#dd").text();
+
+
+        if (emp != "") {
+            $("#Add").attr('disabled', 'disabled');
+            $("#Add").css('cursor', 'not-allowed');
+            $("#Add").attr('Hi', 'You Are Already Declere KRA');
+
+
+        } else {
+            $("#Add").removeAttr('disabled');
+            $("#View").attr('disabled', 'disabled');
+            $("#View").css('cursor', 'not-allowed');
+        }
+
+
+    });
+
+</script>
